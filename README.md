@@ -8,13 +8,13 @@ Built as a fun project to explore modern internet language.
 
 ### Features
 
-Translates plain English phrases into Gen Z slang
+- **Translates plain English phrases into Gen Z slang**
 
-Clean, easy-to-use interface
+- **Clean, easy-to-use interface**
 
-Instant results
+- **Instant results**
 
-Lightweight and fast
+- **Lightweight and fast**
 
 ### Tech Stack
 
@@ -33,6 +33,10 @@ Click the translate button.
 
 Get the Gen Z slang version instantly.
 
+## Live Demo
+
+[View Live Site](#) *(This link will be added after deploying to GitHub Pages)*
+
 ### Purpose
 
 This project was created for pure fun. It is not intended to be a perfect linguistic translator, but rather take on how Gen Z slang is commonly used online.
@@ -47,5 +51,6 @@ Improve sentence-level context handling
 
 Mobile UI enhancements
 
+---
 
-© 2025 Daniel Hall. All Rights Reserved.
+© 2024 Daniel Hall. All rights reserved.
