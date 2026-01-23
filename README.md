@@ -48,3 +48,4 @@ Improve sentence-level context handling
 Mobile UI enhancements
 
 
+© 2025 Daniel Hall. All Rights Reserved.
