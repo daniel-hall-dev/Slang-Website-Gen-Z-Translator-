@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>SlangZ - Gen Z Slang Translator</title>
+  <meta name="description" content="Translate boring English into cool Gen Z slang with SlangZ. The ultimate translator for understanding Gen Z language.">
+  <meta property="og:title" content="SlangZ - Gen Z Slang Translator">
+  <meta property="og:description" content="Translate boring English into cool Gen Z slang with SlangZ">
+  <meta property="og:type" content="website">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>SlangZ</h1>
+      <p>Translate boring English to Gen Z slang</p>
+      <div class="divider"></div>
+    </header>
+
+    <main>
+      <!-- Translator Card -->
+      <div class="card">
+        <div class="input-wrapper">
+          <label for="standard-english" class="label">Standard English</label>
+          <textarea 
+            id="standard-english" 
+            placeholder="Type your boring text here..."
+            spellcheck="false"
+          >That is very cool! I'm quite excited about our plans for the weekend.</textarea>
+          <button id="clear-btn" class="clear-btn" aria-label="Clear text">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <div class="btn-container">
+          <button id="translate-btn" class="translate-btn">
+            <span>Translate to Gen Z</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 8l4-4 4 4" />
+              <path d="M12 4v12" />
+              <path d="M18 13l-4 4-4-4" />
+              <path d="M12 17v3" />
+              <path d="M5 21h14" />
+            </svg>
+          </button>
+        </div>
+
+        <div>
+          <div class="output-header">
+            <label class="label">Gen Z Translation</label>
+            <button id="copy-btn" class="copy-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Copy</span>
+            </button>
+          </div>
+          <div id="output" class="output">
+            <p id="output-text">That's fire fr! I'm lowkey hyped about our move for the weekend.</p>
+            <div id="loading" class="loading" style="display: none;">
+              <div class="loading-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 8l4-4 4 4" />
+                  <path d="M12 4v12" />
+                  <path d="M18 13l-4 4-4-4" />
+                  <path d="M12 17v3" />
+                  <path d="M5 21h14" />
+                </svg>
+              </div>
+              <p>Translating...</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="error" class="error" style="display: none;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span id="error-message">Something went wrong with the translation. Please try again.</span>
+        </div>
+      </div>
+
+      <!-- Slang Examples Card -->
+      <div class="card">
+        <h2 class="label">Common Gen Z Slang</h2>
+        <div class="slang-examples" id="slang-examples">
+          <!-- Will be populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Random Slang Card -->
+      <div class="card random-card">
+        <div class="random-header">
+          <h2 class="label" style="color: white; margin-bottom: 0;">Did you know?</h2>
+        </div>
+        <div class="random-content" id="random-content">
+          <h3 id="random-term">Hitting different</h3>
+          <p id="random-definition">When something feels unusually good or has a special quality to it</p>
+          <button id="random-btn" class="random-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 4v6h6"></path>
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+            </svg>
+            <span>Show me another</span>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; <span id="current-year">2025</span> SlangZ - The ultimate Gen Z translator</p>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    <span>Copied to clipboard!</span>
+  </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

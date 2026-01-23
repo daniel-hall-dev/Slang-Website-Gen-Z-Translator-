@@ -1,0 +1,387 @@
+:root {
+      --primary: #8A2BE2;
+      --primary-light: #9D4EDD;
+      --secondary: #4ECDC4;
+      --background: #F8F9FA;
+      --text-dark: #212529;
+      --text-muted: #6C757D;
+      --text-light: #ADB5BD;
+      --border: #DEE2E6;
+      --card-bg: #FFFFFF;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      line-height: 1.6;
+      color: var(--text-dark);
+      background-color: var(--background);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 32px 16px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .header h1 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
+
+    .header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    .divider {
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      margin: 16px auto;
+      border-radius: 2px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+
+    .label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+
+    .input-wrapper {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      resize: none;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 2px rgba(138, 43, 226, 0.2);
+    }
+
+    .clear-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: none;
+      border: none;
+      color: var(--text-light);
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      line-height: 1;
+    }
+
+    .clear-btn:hover {
+      color: var(--text-muted);
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .translate-btn {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 12px rgba(138, 43, 226, 0.25);
+    }
+
+    .translate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(138, 43, 226, 0.3);
+    }
+
+    .translate-btn:active {
+      transform: translateY(0);
+    }
+
+    .translate-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .output-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .copy-btn {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .copy-btn:hover {
+      color: var(--primary-light);
+    }
+
+    .copy-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .output {
+      background-color: #E9ECEF;
+      border-radius: 8px;
+      padding: 16px;
+      min-height: 100px;
+    }
+
+    .output p {
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    .loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 0;
+    }
+
+    .loading-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.8; transform: scale(0.95); }
+      50% { opacity: 1; transform: scale(1.05); }
+      100% { opacity: 0.8; transform: scale(0.95); }
+    }
+
+    .loading-icon svg {
+      width: 32px;
+      height: 32px;
+      color: white;
+    }
+
+    .loading p {
+      color: var(--text-muted);
+    }
+
+    .error {
+      background-color: #FBE9E7;
+      border-left: 4px solid #FF5252;
+      padding: 16px;
+      margin-top: 24px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .error svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: #FF5252;
+    }
+
+    .slang-examples {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(calc(50% - 12px), 1fr));
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    .slang-example {
+      background-color: #F8F9FA;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .slang-example:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .slang-example h3 {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      color: var(--primary);
+    }
+
+    .slang-example p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .random-card {
+      margin-top: 40px;
+    }
+
+    .random-header {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 16px;
+      border-radius: 16px 16px 0 0;
+    }
+
+    .random-content {
+      padding: 24px;
+      text-align: center;
+    }
+
+    .random-content h3 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .random-content p {
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .random-btn {
+      background-color: #E9ECEF;
+      border: none;
+      color: var(--text-dark);
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background-color 0.2s;
+    }
+
+    .random-btn:hover {
+      background-color: #DEE2E6;
+    }
+
+    .random-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 2rem;
+      }
+
+      .slang-examples {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .fade-out {
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #323232;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 4px;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 1000;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast svg {
+      width: 16px;
+      height: 16px;
+    }
