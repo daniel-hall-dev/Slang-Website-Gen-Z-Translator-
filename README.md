@@ -53,4 +53,4 @@ Mobile UI enhancements
 
 ---
 
-© 2024 Daniel Hall. All rights reserved.
+© 2026 Daniel Hall. All rights reserved.
