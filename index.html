@@ -14,8 +14,20 @@
 <body>
   <div class="container">
     <header class="header">
-      <h1>SlangZ</h1>
-      <p>Translate boring English to Gen Z slang</p>
+      <div class="header-left">
+        <h1>SlangZ</h1>
+        <p>Translate boring English to Gen Z slang</p>
+      </div>
+
+      <div class="header-actions">
+        <button id="settings-toggle" class="settings-btn" aria-haspopup="dialog" aria-expanded="false" aria-controls="settings-panel" title="Settings">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 15.5A3.5 3.5 0 1 0 12 8.5a3.5 3.5 0 0 0 0 7z"></path>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06A2 2 0 1 1 2.3 17.9l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82L4.3 4.7A2 2 0 1 1 7.13 1.87l.06.06a1.65 1.65 0 0 0 1.82.33H9.1A1.65 1.65 0 0 0 10.1 1.7V1a2 2 0 1 1 4 0v.7c.18.03.36.08.53.15.6.27 1.03.77 1.17 1.42.02.12.04.24.05.36h.01c.16.87.93 1.52 1.83 1.52h.09a2 2 0 1 1 0 4h-.09c-.9 0-1.67.65-1.83 1.52-.01.12-.03.24-.05.36.14.65.57 1.15 1.17 1.42z"/>
+          </svg>
+        </button>
+      </div>
+
       <div class="divider"></div>
     </header>
 
@@ -116,7 +128,7 @@
     </main>
 
     <footer>
-      <p>&copy; <span id="current-year">2025</span> SlangZ - The ultimate Gen Z translator</p>
+      <p>&copy; <span id="current-year">2025</span> Daniel Hall. All Rights Reserved</p>
     </footer>
   </div>
 
@@ -126,6 +138,37 @@
     </svg>
     <span>Copied to clipboard!</span>
   </div>
+
+  <!-- Settings overlay & slide-over panel -->
+  <div id="settings-overlay" class="settings-overlay" hidden></div>
+  <aside id="settings-panel" class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settings-title" hidden>
+    <header class="settings-panel__header">
+      <div>
+        <h3 id="settings-title">Settings</h3>
+        <p class="settings-sub">Make SlangZ yours</p>
+      </div>
+      <div class="settings-panel__actions">
+        <button id="settings-close" class="settings-close" aria-label="Close settings">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="settings-panel__body">
+      <div class="setting-row">
+        <div>
+          <label for="dark-mode-toggle" class="setting-label">Dark mode</label>
+          <div class="setting-desc">Smooth, low-contrast theme for late-night vibes</div>
+        </div>
+        <div class="setting-control">
+          <input id="dark-mode-toggle" class="switch-input" type="checkbox" role="switch" aria-checked="false">
+          <span class="switch" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <div class="setting-footnote">Theme preference is saved locally and will persist across visits. If no preference is set, SlangZ follows your system setting.</div>
+    </div>
+  </aside>
 
     <script src="script.js"></script>
 </body>

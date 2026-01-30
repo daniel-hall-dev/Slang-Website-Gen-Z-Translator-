@@ -383,9 +383,192 @@
     function initApp() {
       loadSlangExamples();
       loadRandomSlang();
-      
+      initSettings();
+
       // Set current year in footer
       currentYearEl.textContent = new Date().getFullYear().toString();
+    }
+
+    /* ----------------------
+       Settings & Dark mode
+       ---------------------- */
+    const THEME_KEY = 'slangz-theme'; // 'dark' | 'light' | null => follow system
+    const settingsToggle = document.getElementById('settings-toggle');
+    const settingsPanel = document.getElementById('settings-panel');
+    const settingsOverlay = document.getElementById('settings-overlay');
+    const settingsClose = document.getElementById('settings-close');
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+
+    function getStoredTheme() {
+      return localStorage.getItem(THEME_KEY); // 'dark' | 'light' | null
+    }
+
+    function detectSystemTheme() {
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    function applyTheme(theme, { save = false } = {}) {
+      // theme: 'dark' | 'light' | 'system' | null
+      let resolved = theme;
+      if (!theme || theme === 'system') resolved = detectSystemTheme();
+
+      // apply (explicitly set light/dark so CSS [data-theme] selectors work)
+      document.documentElement.setAttribute('data-theme', resolved === 'dark' ? 'dark' : 'light');
+
+      // hint to user agent for form controls / scrollbars
+      try { document.documentElement.style.colorScheme = resolved === 'dark' ? 'dark' : 'light'; } catch (e) { /* graceful */ }
+
+      // reflect on toggle (if present)
+      if (darkModeToggle) {
+        darkModeToggle.checked = resolved === 'dark';
+        darkModeToggle.setAttribute('aria-checked', String(resolved === 'dark'));
+      }
+
+      // update mobile chrome / statusbar color for a cohesive look
+      try {
+        let meta = document.querySelector('meta[name="theme-color"]');
+        if (!meta) {
+          meta = document.createElement('meta');
+          meta.name = 'theme-color';
+          document.head.appendChild(meta);
+        }
+        const bg = getComputedStyle(document.documentElement).getPropertyValue('--background').trim() || (resolved === 'dark' ? '#0B0E12' : '#F8F9FA');
+        meta.setAttribute('content', bg);
+      } catch (err) {
+        /* no-op */
+      }
+
+      if (save) {
+        if (!theme || theme === 'system') localStorage.removeItem(THEME_KEY);
+        else localStorage.setItem(THEME_KEY, theme === 'dark' ? 'dark' : 'light');
+      }
+    }
+
+    function initSettings() {
+      // initial theme (persisted or follow system)
+      const stored = getStoredTheme();
+      applyTheme(stored || 'system');
+
+      // ensure the panel is positioned relative to the fixed trigger
+      positionSettingsPanel();
+
+      // open/close handlers
+      if (settingsToggle) {
+        settingsToggle.addEventListener('click', () => {
+          const isOpen = settingsPanel && settingsPanel.getAttribute('data-open') === 'true';
+          isOpen ? closeSettings() : openSettings();
+        });
+      }
+
+      if (settingsClose) settingsClose.addEventListener('click', closeSettings);
+      if (settingsOverlay) settingsOverlay.addEventListener('click', closeSettings);
+
+      // toggle theme
+      if (darkModeToggle) {
+        darkModeToggle.addEventListener('change', (e) => {
+          const wantDark = e.target.checked;
+          applyTheme(wantDark ? 'dark' : 'light', { save: true });
+        });
+
+        // Robust click/keyboard fallback: make the visible `.switch` toggle the hidden input
+        try {
+          const visualSwitch = settingsPanel && settingsPanel.querySelector('.switch');
+          if (visualSwitch) {
+            visualSwitch.addEventListener('click', (ev) => {
+              // keep native behavior for label clicks, but ensure visual click toggles input
+              darkModeToggle.focus();
+              darkModeToggle.checked = !darkModeToggle.checked;
+              darkModeToggle.dispatchEvent(new Event('change', { bubbles: true }));
+            });
+
+            visualSwitch.addEventListener('keydown', (ev) => {
+              if (ev.key === ' ' || ev.key === 'Enter') {
+                ev.preventDefault();
+                visualSwitch.click();
+              }
+            });
+          }
+        } catch (err) {
+          // defensive - don't block settings initialization
+          console.warn('switch enhancement failed', err);
+        }
+      }
+
+      // reposition on resize / orientation change
+      window.addEventListener('resize', positionSettingsPanel, { passive: true });
+      window.addEventListener('orientationchange', positionSettingsPanel, { passive: true });
+
+      // close on ESC and restore focus
+      document.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Escape' && settingsPanel && settingsPanel.getAttribute('data-open') === 'true') {
+          closeSettings();
+        }
+      });
+
+      // respond to system changes if user hasn't chosen a preference
+      if (window.matchMedia) {
+        const mq = window.matchMedia('(prefers-color-scheme: dark)');
+        mq.addEventListener && mq.addEventListener('change', (e) => {
+          if (!getStoredTheme()) applyTheme('system');
+        });
+      }
+    }
+
+    // Position the settings panel so it visually anchors to the fixed settings button
+    function positionSettingsPanel() {
+      if (!settingsPanel || !settingsToggle) return;
+
+      // mobile bottom-sheet uses CSS; only position when the panel is shown as a popover
+      if (window.matchMedia('(max-width: 520px)').matches) {
+        settingsPanel.style.removeProperty('left');
+        settingsPanel.style.removeProperty('right');
+        settingsPanel.style.removeProperty('top');
+        settingsPanel.style.removeProperty('transform-origin');
+        return;
+      }
+
+      const btnRect = settingsToggle.getBoundingClientRect();
+      const pad = 12; // gap between button and panel
+      // anchor panel so it doesn't overflow the viewport
+      const right = Math.max(window.innerWidth - (btnRect.right + pad), 12);
+      settingsPanel.style.right = `${right}px`;
+      settingsPanel.style.top = `calc(${Math.max(12, btnRect.bottom + pad)}px)`;
+      settingsPanel.style.transformOrigin = 'top right';
+    }
+
+    function openSettings() {
+      if (!settingsPanel || !settingsOverlay || !settingsToggle) return;
+
+      // position relative to trigger (handles responsive)
+      positionSettingsPanel();
+
+      settingsPanel.hidden = false;
+      settingsOverlay.hidden = false;
+      requestAnimationFrame(() => {
+        settingsPanel.setAttribute('data-open', 'true');
+        settingsPanel.setAttribute('aria-hidden', 'false');
+        settingsOverlay.setAttribute('data-visible', 'true');
+        settingsToggle.setAttribute('aria-expanded', 'true');
+      });
+
+      // focus first focusable control
+      const focusTarget = settingsPanel.querySelector('.switch-input') || settingsClose;
+      focusTarget && focusTarget.focus();
+    }
+
+    function closeSettings() {
+      if (!settingsPanel || !settingsOverlay || !settingsToggle) return;
+      settingsPanel.setAttribute('data-open', 'false');
+      settingsPanel.setAttribute('aria-hidden', 'true');
+      settingsOverlay.setAttribute('data-visible', 'false');
+      settingsToggle.setAttribute('aria-expanded', 'false');
+
+      // wait for animation then hide
+      setTimeout(() => {
+        settingsPanel.hidden = true;
+        settingsOverlay.hidden = true;
+        settingsToggle.focus();
+      }, 260);
     }
 
     // Initialize on load
